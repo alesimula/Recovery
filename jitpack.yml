@@ -1,4 +1,4 @@
 jdk:
   - openjdk8
 install:
-  - ./gradlew clean :recovery:publishToMavenLocal :recovery-no-op:publishToMavenLocal
+  - ./gradlew clean :recovery:install :recovery-no-op:install
