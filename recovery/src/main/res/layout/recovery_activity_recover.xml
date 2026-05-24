@@ -48,10 +48,20 @@
                 tools:text="@string/recovery_crash_tips_msg"/>
 
             <Button
-                android:id="@+id/btn_recover"
+                android:id="@+id/btn_share_log"
                 android:layout_width="168dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/recovery_default_margin"
+                android:background="@drawable/recovery_default_btn_selector"
+                android:text="@string/recovery_share_log"
+                android:textColor="@color/recovery_textColor"
+                android:textSize="@dimen/recovery_default_text_size"/>
+
+            <Button
+                android:id="@+id/btn_recover"
+                android:layout_width="168dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/recovery_default_margin_8dp"
                 android:background="@drawable/recovery_default_btn_selector"
                 android:text="@string/recovery_recover"
                 android:textColor="@color/recovery_textColor"

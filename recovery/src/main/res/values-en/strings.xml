@@ -2,6 +2,7 @@
 <resources>
     <string name="recovery_menu_debug">Debug</string>
     <string name="recovery_menu_save">Save</string>
+    <string name="recovery_share_log">Share Log</string>
     <string name="recovery_restart_clear">Restart and clear</string>
     <string name="recovery_restart">Restart</string>
     <string name="recovery_recover">Recover</string>

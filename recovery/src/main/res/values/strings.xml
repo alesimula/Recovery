@@ -1,6 +1,7 @@
 <resources>
     <string name="recovery_menu_debug">Debug</string>
     <string name="recovery_menu_save">Save</string>
+    <string name="recovery_share_log">分享崩溃日志</string>
     <string name="recovery_restart_clear">重启并清空缓存</string>
     <string name="recovery_restart">重启应用</string>
     <string name="recovery_recover">恢复界面</string>

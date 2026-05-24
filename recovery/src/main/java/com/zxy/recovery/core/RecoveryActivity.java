@@ -2,8 +2,10 @@ package com.zxy.recovery.core;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -41,6 +43,8 @@ public final class RecoveryActivity extends AppCompatActivity {
 
     private boolean isDebugModeActive = false;
 
+    private boolean isSharing = false;
+
     private RecoveryStore.ExceptionData mExceptionData;
 
     private Toolbar mToolbar;
@@ -48,6 +52,8 @@ public final class RecoveryActivity extends AppCompatActivity {
     private String mStackTrace;
 
     private String mCause;
+
+    private Button mShareLogBtn;
 
     private Button mRecoverBtn;
 
@@ -130,6 +136,7 @@ public final class RecoveryActivity extends AppCompatActivity {
     private void initView() {
         mMainLayout = findViewById(R.id.recovery_main_layout);
         mDebugLayout = findViewById(R.id.recovery_debug_layout);
+        mShareLogBtn = (Button) findViewById(R.id.btn_share_log);
         mRecoverBtn = (Button) findViewById(R.id.btn_recover);
         mRestartBtn = (Button) findViewById(R.id.btn_restart);
         mRestartClearBtn = (Button) findViewById(R.id.btn_restart_clear);
@@ -157,6 +164,13 @@ public final class RecoveryActivity extends AppCompatActivity {
     }
 
     private void setupEvent() {
+        mShareLogBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shareCrashLog();
+            }
+        });
+
         mRecoverBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -336,6 +350,49 @@ public final class RecoveryActivity extends AppCompatActivity {
         return true;
     }
 
+    private void shareCrashLog() {
+        File dir = new File(getCacheDir(), DEFAULT_CRASH_FILE_DIR_NAME);
+        if (!dir.exists())
+            dir.mkdirs();
+        String date = RecoveryUtil.getDateFormat().format(new Date(System.currentTimeMillis()));
+        File file = new File(dir, date + ".log");
+        FileWriter writer = null;
+        try {
+            writer = new FileWriter(file);
+            writer.write("Exception:\n" + (mExceptionData == null ? null : mExceptionData.toString()) + "\n\n");
+            writer.write("Cause:\n" + mCause + "\n\n");
+            writer.write("StackTrace:\n" + mStackTrace + "\n\n");
+            writer.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Failed to create log file", Toast.LENGTH_SHORT).show();
+            return;
+        } finally {
+            if (writer != null)
+                try {
+                    writer.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+        }
+
+        Uri uri;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            String authority = getApplicationContext().getPackageName() + ".recovery.fileprovider";
+            uri = FileProvider.getUriForFile(this, authority, file);
+        } else {
+            uri = Uri.fromFile(file);
+        }
+
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Crash Log - " + RecoveryUtil.getAppName(this));
+        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        isSharing = true;
+        startActivity(Intent.createChooser(shareIntent, getResources().getString(R.string.recovery_share_log)));
+    }
+
     private void killProcess() {
         android.os.Process.killProcess(android.os.Process.myPid());
         System.exit(10);
@@ -379,7 +436,15 @@ public final class RecoveryActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        finish();
+        if (!isSharing) {
+            finish();
+        }
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        isSharing = false;
     }
 
     @Override
