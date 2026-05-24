@@ -3,7 +3,7 @@ A crash recovery framework!
 
 ----
 
-[ ![Download](https://api.bintray.com/packages/sunzxyong/maven/Recovery/images/download.svg) ](https://bintray.com/sunzxyong/maven/Recovery/_latestVersion) ![build](https://img.shields.io/badge/build-passing-blue.svg) [![License](https://img.shields.io/hexpm/l/plug.svg)](https://github.com/Sunzxyong/Recovery/blob/master/LICENSE)
+[![](https://jitpack.io/v/alesimula/Recovery.svg)](https://jitpack.io/#alesimula/Recovery) ![build](https://img.shields.io/badge/build-passing-blue.svg) [![License](https://img.shields.io/hexpm/l/plug.svg)](https://github.com/alesimula/Recovery/blob/master/LICENSE)
 
 [中文文档](https://github.com/Sunzxyong/Recovery/blob/master/README-Chinese.md)
 
@@ -24,29 +24,28 @@ A crash recovery framework!
 
 # **Usage**
 ## **Installation**
+
+Add JitPack repository to your root `build.gradle`:
+
+```gradle
+allprojects {
+    repositories {
+        maven { url 'https://jitpack.io' }
+    }
+}
+```
+
 **Using Gradle**
 
 ```gradle
-    implementation 'com.zxy.android:recovery:1.0.0'
+    implementation 'com.github.alesimula.Recovery:recovery:1.0.0'
 ```
 
 or
 
 ```gradle
-    debugImplementation 'com.zxy.android:recovery:1.0.0'
-    releaseImplementation 'com.zxy.android:recovery-no-op:1.0.0'
-```
-
-
-**Using Maven**
-
-```xml
-<dependency>
-  	<groupId>com.zxy.android</groupId>
-  	<artifactId>recovery</artifactId>
-  	<version>1.0.0</version>
-  	<type>pom</type>
-</dependency>
+    debugImplementation 'com.github.alesimula.Recovery:recovery:1.0.0'
+    releaseImplementation 'com.github.alesimula.Recovery:recovery-no-op:1.0.0'
 ```
 
 ## **Initialization**

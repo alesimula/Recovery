@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion 26
@@ -27,23 +26,4 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-}
-
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
-
-publish {
-    userOrg = 'sunzxyong'
-    uploadName = 'Recovery-no-op'
-    groupId = 'com.zxy.android'
-    artifactId = 'recovery-no-op'
-    publishVersion = RECOVERY_VERSION
-    repoName = 'maven'
-    dryRun = 'false'
-    desc = 'A crash recover framework'
-    website = 'https://github.com/Sunzxyong/Recovery'
-    issueTracker = 'https://github.com/Sunzxyong/Recovery/issues'
-    repository = 'https://github.com/Sunzxyong/Recovery.git'
-    bintrayUser = properties.getProperty("bintray.user")
-    bintrayKey = properties.getProperty("bintray.apikey")
 }
