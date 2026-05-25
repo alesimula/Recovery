@@ -37,15 +37,24 @@ allprojects {
 
 **Using Gradle**
 
+If you want to use the recovery framework in debug and release variants, you can use the following:
+
 ```gradle
-    implementation 'com.github.alesimula.Recovery:recovery:1.0.0'
+    implementation 'com.github.alesimula.Recovery:recovery:1.0.1'
 ```
 
-or
+If you want to use the recovery framework only in debug variant, you can use the following:
 
 ```gradle
-    debugImplementation 'com.github.alesimula.Recovery:recovery:1.0.0'
-    releaseImplementation 'com.github.alesimula.Recovery:recovery-no-op:1.0.0'
+    debugImplementation 'com.github.alesimula.Recovery:recovery:1.0.1'
+    releaseImplementation 'com.github.alesimula.Recovery:recovery-no-op:1.0.1'
+```
+
+or, IF AND ONLY you wrap the code that follows inside `if (BuildConfig.DEBUG) { [...] }` (UNSAFE: relies on R8 optimizer to strip the code on release)
+
+```gradle
+    debugImplementation 'com.github.alesimula.Recovery:recovery:1.0.1'
+    releaseCompileOnly 'com.github.alesimula.Recovery:recovery-no-op:1.0.1'
 ```
 
 ## **Initialization**
