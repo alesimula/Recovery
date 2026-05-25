@@ -2,9 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.zxy.recovery">
 
-    <uses-permission android:name="android.permission.GET_TASKS"/>
+    <!-- Since I'm only aiming for Android 8+, these permissions are not necessary -->
+
+    <!--uses-permission android:name="android.permission.GET_TASKS"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/-->
 
     <application>
         <activity
