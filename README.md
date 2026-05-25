@@ -1,11 +1,10 @@
 # **Recovery**
-A crash recovery framework!
+A Framework for crash recovery and simple offline log sharing with no required Android permissions;
+Can be configured for all build types as well as debug builds only.
 
 ----
 
 [![](https://jitpack.io/v/alesimula/Recovery.svg)](https://jitpack.io/#alesimula/Recovery) ![build](https://img.shields.io/badge/build-passing-blue.svg) [![License](https://img.shields.io/hexpm/l/plug.svg)](https://github.com/alesimula/Recovery/blob/master/LICENSE)
-
-[中文文档](https://github.com/Sunzxyong/Recovery/blob/master/README-Chinese.md)
 
 # **Introduction**
 
@@ -13,14 +12,16 @@ A crash recovery framework!
 
 “Recovery” can help you to automatically handle application crash in runtime. It provides you with following functionality:
 
+* A way to share crash logs directly;
 * Automatic recovery activity with stack and data;
 * Ability to recover to the top activity;
 * A way to view and save crash info;
 * Ability to restart and clear the cache;
 * Allows you to do a restart instead of recovering if failed twice in one minute.
 
-# **Art**
-![recovery](http://7xswxf.com2.z0.glb.qiniucdn.com//blog/recovery.jpg)
+# **Preview**
+<img width="320" src="/raw-assets/github/example.png"/>
+
 
 # **Usage**
 ## **Installation**
@@ -168,6 +169,7 @@ You can customize UI by setting these properties in your styles file:
 
 ```
    Copyright 2016 zhengxiaoyong
+   Copyright 2026 alesimula
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
