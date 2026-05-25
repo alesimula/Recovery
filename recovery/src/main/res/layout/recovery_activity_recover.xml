@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,7 +10,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
+        android:layout_marginTop="?android:attr/actionBarSize"
         android:animateLayoutChanges="true">
 
         <include
@@ -89,15 +88,15 @@
         </LinearLayout>
     </RelativeLayout>
 
-    <android.support.v7.widget.Toolbar
+    <Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:animateLayoutChanges="true"
-        android:background="?attr/colorPrimary"
+        android:background="?android:attr/colorPrimary"
         android:elevation="@dimen/recovery_activity_toolbar_elevation"
         android:fitsSystemWindows="true"
-        android:minHeight="?attr/actionBarSize"
+        android:minHeight="?android:attr/actionBarSize"
         android:theme="@style/RecoveryTheme.AppBarOverlay"
-        app:popupTheme="@style/RecoveryTheme.PopupOverlay"/>
+        android:popupTheme="@style/RecoveryTheme.PopupOverlay"/>
 </RelativeLayout>

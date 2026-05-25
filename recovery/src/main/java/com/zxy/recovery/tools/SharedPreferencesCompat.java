@@ -4,7 +4,6 @@ package com.zxy.recovery.tools;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Process;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import java.util.Map;
@@ -151,7 +150,7 @@ public class SharedPreferencesCompat {
         private static final String THREAD_NAME = "SharedPreferencesThread";
 
         @Override
-        public Thread newThread(@NonNull final Runnable r) {
+        public Thread newThread(final Runnable r) {
             Runnable wrapper = new Runnable() {
                 @Override
                 public void run() {

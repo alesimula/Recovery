@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="RecoveryTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/recovery_colorPrimary</item>
-        <item name="colorPrimaryDark">@color/recovery_colorPrimaryDark</item>
-        <item name="colorAccent">@color/recovery_colorAccent</item>
+    <style name="RecoveryTheme" parent="android:Theme.Material.Light.DarkActionBar">
+        <item name="android:colorPrimary">@color/recovery_colorPrimary</item>
+        <item name="android:colorPrimaryDark">@color/recovery_colorPrimaryDark</item>
+        <item name="android:colorAccent">@color/recovery_colorAccent</item>
         <item name="android:windowBackground">@null</item>
     </style>
 
     <style name="RecoveryTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@color/recovery_colorPrimaryDark</item>
     </style>
 
-    <style name="RecoveryTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+    <style name="RecoveryTheme.AppBarOverlay" parent="android:ThemeOverlay.Material.Dark.ActionBar"/>
 
-    <style name="RecoveryTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+    <style name="RecoveryTheme.PopupOverlay" parent="android:ThemeOverlay.Material.Light"/>
 
 </resources>

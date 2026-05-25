@@ -17,11 +17,5 @@
 #}
 
 -ignorewarnings
--keepattributes Signature
--keepattributes *Annotation*
--keep @android.support.annotation.Keep class *
--keepclassmembers class * {
-    @android.support.annotation.Keep *;
-}
--keepclasseswithmembers class * implements java.io.Serializable {*;}
 -keep class com.zxy.recovery.core.Recovery {*;}
+-keep class com.zxy.recovery.core.CrashData { *; }

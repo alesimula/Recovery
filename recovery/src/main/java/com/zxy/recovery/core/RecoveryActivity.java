@@ -5,10 +5,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.content.FileProvider;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,7 +32,7 @@ import java.util.Date;
 /**
  * Created by zhengxiaoyong on 16/8/26.
  */
-public final class RecoveryActivity extends AppCompatActivity {
+public final class RecoveryActivity extends Activity {
 
     public static final String RECOVERY_MODE_ACTIVE = "recovery_mode_active";
 
@@ -93,9 +92,9 @@ public final class RecoveryActivity extends AppCompatActivity {
 
     private void setupToolbar() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(mToolbar);
-        if (getSupportActionBar() != null)
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        setActionBar(mToolbar);
+        if (getActionBar() != null)
+            getActionBar().setDisplayShowTitleEnabled(false);
         mToolbar.setTitle(RecoveryUtil.getAppName(this));
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -355,7 +354,8 @@ public final class RecoveryActivity extends AppCompatActivity {
         if (!dir.exists())
             dir.mkdirs();
         String date = RecoveryUtil.getDateFormat().format(new Date(System.currentTimeMillis()));
-        File file = new File(dir, date + ".log");
+        String fileName = date + ".log";
+        File file = new File(dir, fileName);
         FileWriter writer = null;
         try {
             writer = new FileWriter(file);
@@ -376,13 +376,8 @@ public final class RecoveryActivity extends AppCompatActivity {
                 }
         }
 
-        Uri uri;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            String authority = getApplicationContext().getPackageName() + ".recovery.fileprovider";
-            uri = FileProvider.getUriForFile(this, authority, file);
-        } else {
-            uri = Uri.fromFile(file);
-        }
+        String authority = getApplicationContext().getPackageName() + ".recovery.crashlog";
+        Uri uri = RecoveryCrashFileProvider.getUriForFile(authority, fileName);
 
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
@@ -399,8 +394,8 @@ public final class RecoveryActivity extends AppCompatActivity {
     }
 
     private void setDisplayHomeAsUpEnabled(boolean enabled) {
-        if (getSupportActionBar() != null)
-            getSupportActionBar().setDisplayHomeAsUpEnabled(enabled);
+        if (getActionBar() != null)
+            getActionBar().setDisplayHomeAsUpEnabled(enabled);
         final ImageButton navButton = (ImageButton) Reflect.on(Toolbar.class).field("mNavButtonView").get(mToolbar);
         if (navButton != null) {
             if (enabled) {
