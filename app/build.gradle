@@ -6,7 +6,7 @@ android {
     resourcePrefix ""
     defaultConfig {
         applicationId "com.zxy.recovery.test"
-        minSdkVersion 14
+        minSdkVersion 24
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
