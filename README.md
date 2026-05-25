@@ -157,6 +157,7 @@ You can customize UI by setting these properties in your styles file:
 * `VERSION-0.1.5`——**fix 8.0+ hook bug**
 * `VERSION-0.1.6`——**update**
 * `VERSION-1.0.0`——**Fix 8.0 compatibility issue**
+* `VERSION-1.0.1`——**Added share logs option and customized splash logo**
 
 # **LICENSE**
 
