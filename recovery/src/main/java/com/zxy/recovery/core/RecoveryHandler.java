@@ -146,6 +146,8 @@ final class RecoveryHandler implements Thread.UncaughtExceptionHandler {
             intent.putExtra(RecoveryStore.EXCEPTION_DATA, mExceptionData);
         intent.putExtra(RecoveryStore.STACK_TRACE, String.valueOf(mStackTrace));
         intent.putExtra(RecoveryStore.EXCEPTION_CAUSE, String.valueOf(mCause));
+        intent.putExtra(RecoveryStore.DEV_EMAIL, Recovery.getInstance().getDevEmail());
+        intent.putExtra(RecoveryStore.SHOW_EMAIL_BUTTON, Recovery.getInstance().isShowEmailButton());
         Recovery.getInstance().getContext().startActivity(intent);
     }
 

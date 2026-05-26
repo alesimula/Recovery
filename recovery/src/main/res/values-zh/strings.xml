@@ -1,6 +1,8 @@
 <resources>
     <string name="recovery_menu_debug">Debug</string>
     <string name="recovery_menu_save">Save</string>
+    <string name="recovery_email_log">发送邮件</string>
+    <string name="recovery_dev_email_msg">开发者邮箱：%1$s</string>
     <string name="recovery_share_log">分享崩溃日志</string>
     <string name="recovery_restart_clear">重启并清空缓存</string>
     <string name="recovery_restart">重启应用</string>
@@ -13,5 +15,5 @@
     <string name="recovery_class_name">ClassName: %s</string>
     <string name="recovery_method_name">MethodName: %s</string>
     <string name="recovery_line_number">LineNumber: %d</string>
-    <string name="recovery_crash_tips_msg">%s在使用时发生一个错误\n请尝试恢复或重启应用!</string>
+    <string name="recovery_crash_tips_msg">%s - 发生了一个错误。</string>
 </resources>

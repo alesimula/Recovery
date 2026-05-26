@@ -38,6 +38,8 @@ public final class RecoveryActivity extends Activity {
 
     private static final String DEFAULT_CRASH_FILE_DIR_NAME = "recovery_crash";
 
+    private static final String LOG_MESSAGE_PREFIX = "Crash Log - ";
+
     private boolean isDebugMode = false;
 
     private boolean isDebugModeActive = false;
@@ -53,6 +55,10 @@ public final class RecoveryActivity extends Activity {
     private String mCause;
 
     private Button mShareLogBtn;
+
+    private Button mEmailLogBtn;
+
+    private TextView mDevEmailTv;
 
     private Button mRecoverBtn;
 
@@ -136,6 +142,7 @@ public final class RecoveryActivity extends Activity {
         mMainLayout = findViewById(R.id.recovery_main_layout);
         mDebugLayout = findViewById(R.id.recovery_debug_layout);
         mShareLogBtn = (Button) findViewById(R.id.btn_share_log);
+        mEmailLogBtn = (Button) findViewById(R.id.btn_email_log);
         mRecoverBtn = (Button) findViewById(R.id.btn_recover);
         mRestartBtn = (Button) findViewById(R.id.btn_restart);
         mRestartClearBtn = (Button) findViewById(R.id.btn_restart_clear);
@@ -150,6 +157,20 @@ public final class RecoveryActivity extends Activity {
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             mScrollView.setPadding(0, RecoveryUtil.dp2px(getApplication(), 16), 0, 0);
+        }
+        
+        String devEmail = getIntent().getStringExtra(RecoveryStore.DEV_EMAIL);
+        boolean showEmailButton = getIntent().getBooleanExtra(RecoveryStore.SHOW_EMAIL_BUTTON, false);
+
+        if (devEmail != null && !devEmail.isEmpty()) {
+            final String emailMsg = String.format(getResources().getString(R.string.recovery_dev_email_msg), devEmail);
+            mCrashTipsTv.post(new java.lang.Runnable() {
+                @Override
+                public void run() {
+                    mCrashTipsTv.setText(mCrashTipsTv.getText() + "\n" + emailMsg);
+                }
+            });
+            if (showEmailButton) mEmailLogBtn.setVisibility(View.VISIBLE);
         }
     }
 
@@ -166,7 +187,14 @@ public final class RecoveryActivity extends Activity {
         mShareLogBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                shareCrashLog();
+                shareCrashLog(false);
+            }
+        });
+
+        mEmailLogBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shareCrashLog(true);
             }
         });
 
@@ -349,7 +377,7 @@ public final class RecoveryActivity extends Activity {
         return true;
     }
 
-    private void shareCrashLog() {
+    private Uri getCrashLogUri() {
         File dir = new File(getCacheDir(), DEFAULT_CRASH_FILE_DIR_NAME);
         if (!dir.exists())
             dir.mkdirs();
@@ -366,7 +394,7 @@ public final class RecoveryActivity extends Activity {
         } catch (IOException e) {
             e.printStackTrace();
             Toast.makeText(this, "Failed to create log file", Toast.LENGTH_SHORT).show();
-            return;
+            return null;
         } finally {
             if (writer != null)
                 try {
@@ -377,12 +405,20 @@ public final class RecoveryActivity extends Activity {
         }
 
         String authority = getApplicationContext().getPackageName() + ".recovery.crashlog";
-        Uri uri = RecoveryCrashFileProvider.getUriForFile(authority, fileName);
+        return RecoveryCrashFileProvider.getUriForFile(authority, fileName);
+    }
 
-        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-        shareIntent.setType("text/plain");
+    private void shareCrashLog(boolean isEmail) {
+        Uri uri = getCrashLogUri();
+        if (uri == null) return;
+
+        Intent shareIntent = new Intent(isEmail ? Intent.ACTION_SENDTO : Intent.ACTION_SEND);
+        if (isEmail) {
+            shareIntent.setData(Uri.parse("mailto:"));
+            shareIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{getIntent().getStringExtra(RecoveryStore.DEV_EMAIL)});
+        } else shareIntent.setType("text/plain");
         shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
-        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Crash Log - " + RecoveryUtil.getAppName(this));
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, LOG_MESSAGE_PREFIX + RecoveryUtil.getAppName(this));
         shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         isSharing = true;
         startActivity(Intent.createChooser(shareIntent, getResources().getString(R.string.recovery_share_log)));

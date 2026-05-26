@@ -53,6 +53,10 @@ public class Recovery {
      */
     private boolean isRecoverEnabled = true;
 
+    private String devEmail = null;
+
+    private boolean showEmailButton = false;
+
     private Recovery() {
     }
 
@@ -121,6 +125,20 @@ public class Recovery {
     public Recovery recoverEnabled(boolean enabled) {
         this.isRecoverEnabled = enabled;
         return this;
+    }
+
+    public Recovery showDevEmail(String devEmail, boolean showEmailButton) {
+        this.devEmail = devEmail;
+        this.showEmailButton = showEmailButton;
+        return this;
+    }
+
+    public String getDevEmail() {
+        return devEmail;
+    }
+
+    public boolean isShowEmailButton() {
+        return showEmailButton;
     }
 
     private void registerRecoveryHandler() {

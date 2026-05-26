@@ -31,6 +31,10 @@ public final class RecoveryStore {
 
     static final String EXCEPTION_CAUSE = "recovery_exception_cause";
 
+    static final String DEV_EMAIL = "recovery_dev_email";
+
+    static final String SHOW_EMAIL_BUTTON = "recovery_show_email_button";
+
     private volatile static RecoveryStore sInstance;
 
     private static final Object LOCK = new Object();
