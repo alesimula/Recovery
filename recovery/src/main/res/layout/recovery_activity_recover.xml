@@ -7,10 +7,22 @@
     android:background="@color/recovery_background"
     tools:context="com.zxy.recovery.core.RecoveryActivity">
 
+    <Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:background="?android:attr/colorPrimary"
+        android:elevation="@dimen/recovery_activity_toolbar_elevation"
+        android:fitsSystemWindows="true"
+        android:minHeight="?android:attr/actionBarSize"
+        android:theme="@style/RecoveryTheme.AppBarOverlay"
+        android:popupTheme="@style/RecoveryTheme.PopupOverlay"/>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?android:attr/actionBarSize"
+        android:layout_below="@+id/toolbar"
         android:animateLayoutChanges="true">
 
         <include
@@ -19,19 +31,19 @@
             android:visibility="gone"/>
 
         <ScrollView
+                android:id="@+id/recovery_main_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fillViewport="true"
                 android:scrollbars="vertical">
 
             <LinearLayout
-                    android:id="@+id/recovery_main_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:orientation="vertical"
                     android:paddingBottom="16dp"
-                    android:paddingTop="16dp">
+                    android:paddingTop="2dp">
 
                 <ImageView
                         android:layout_width="230dp"
@@ -104,16 +116,4 @@
             </LinearLayout>
         </ScrollView>
     </RelativeLayout>
-
-    <Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:animateLayoutChanges="true"
-        android:background="?android:attr/colorPrimary"
-        android:elevation="@dimen/recovery_activity_toolbar_elevation"
-        android:fitsSystemWindows="true"
-        android:minHeight="?android:attr/actionBarSize"
-        android:theme="@style/RecoveryTheme.AppBarOverlay"
-        android:popupTheme="@style/RecoveryTheme.PopupOverlay"/>
 </RelativeLayout>

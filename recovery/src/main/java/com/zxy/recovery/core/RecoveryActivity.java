@@ -425,6 +425,7 @@ public final class RecoveryActivity extends Activity {
         shareIntent.putExtra(Intent.EXTRA_SUBJECT, LOG_MESSAGE_PREFIX + RecoveryUtil.getAppName(this));
         shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
+        isSharing = true;
         /*if (!isEmail) */ startActivity(Intent.createChooser(shareIntent, getResources().getString(R.string.recovery_share_log)));
         //else if (shareIntent.resolveActivity(getPackageManager()) != null) startActivity(shareIntent);
     }
