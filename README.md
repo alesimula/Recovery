@@ -39,21 +39,21 @@ allprojects {
 If you want to use the recovery framework in debug and release variants, you can use the following:
 
 ```gradle
-    implementation 'com.github.alesimula.Recovery:recovery:1.0.4'
+    implementation 'com.github.alesimula.Recovery:recovery:1.0.5'
 ```
 
 If you want to use the recovery framework only in debug variant, you can use the following:
 
 ```gradle
-    debugImplementation 'com.github.alesimula.Recovery:recovery:1.0.4'
-    releaseImplementation 'com.github.alesimula.Recovery:recovery-no-op:1.0.4'
+    debugImplementation 'com.github.alesimula.Recovery:recovery:1.0.5'
+    releaseImplementation 'com.github.alesimula.Recovery:recovery-no-op:1.0.5'
 ```
 
 or, IF AND ONLY you wrap the code that follows inside `if (BuildConfig.DEBUG) { [...] }` (UNSAFE: relies on R8 optimizer to strip the code on release)
 
 ```gradle
-    debugImplementation 'com.github.alesimula.Recovery:recovery:1.0.4'
-    releaseCompileOnly 'com.github.alesimula.Recovery:recovery-no-op:1.0.4'
+    debugImplementation 'com.github.alesimula.Recovery:recovery:1.0.5'
+    releaseCompileOnly 'com.github.alesimula.Recovery:recovery-no-op:1.0.5'
 ```
 
 ## **Initialization**
@@ -63,6 +63,7 @@ You can use this code sample to initialize Recovery in your application:
         Recovery.getInstance()
                 .debug(true)
                 .recoverInBackground(false)
+                .showDevEmail("alesimula@murinelauncher.app", true) // call to show "SEND MAIL" button
                 .recoverStack(true)
                 .mainPage(MainActivity.class)
                 .recoverEnabled(true)
@@ -80,6 +81,7 @@ You can use this code sample to initialize Recovery in your application:
         Recovery.getInstance()
                 .debug(true)
                 .recoverInBackground(false)
+                .showDevEmail("alesimula@murinelauncher.app", true) // call to show "SEND MAIL" button
                 .recoverStack(true)
                 .mainPage(MainActivity.class)
                 .recoverEnabled(true)
@@ -161,6 +163,7 @@ You can customize UI by setting these properties in your styles file:
 * `VERSION-1.0.2`——**Reduced library size (no legacy asset generation by increasing minSdk to 24)**
 * `VERSION-1.0.3`——**Reduced library impact on apk significantly: removed appcompat dependencies and broad proguard rules**
 * `VERSION-1.0.4`——**Change default language to English**
+* `VERSION-1.0.5`——**Added send e-mail option**
 
 # **LICENSE**
 
