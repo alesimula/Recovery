@@ -1,8 +1,5 @@
 package com.zxy.recovery.core;
 
-import android.content.pm.ResolveInfo;
-import android.content.pm.ActivityInfo;
-import android.os.Parcelable;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
