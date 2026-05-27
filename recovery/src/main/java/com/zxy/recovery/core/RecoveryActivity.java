@@ -1,5 +1,8 @@
 package com.zxy.recovery.core;
 
+import android.content.pm.ResolveInfo;
+import android.content.pm.ActivityInfo;
+import android.os.Parcelable;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -411,17 +414,23 @@ public final class RecoveryActivity extends Activity {
     private void shareCrashLog(boolean isEmail) {
         Uri uri = getCrashLogUri();
         if (uri == null) return;
+        String devEmail = getIntent().getStringExtra(RecoveryStore.DEV_EMAIL);
 
-        Intent shareIntent = new Intent(isEmail ? Intent.ACTION_SENDTO : Intent.ACTION_SEND);
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
         if (isEmail) {
-            shareIntent.setData(Uri.parse("mailto:"));
-            shareIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{getIntent().getStringExtra(RecoveryStore.DEV_EMAIL)});
-        } else shareIntent.setType("text/plain");
+            Intent emailFilterIntent = new Intent(Intent.ACTION_SENDTO);
+            emailFilterIntent.setData(Uri.parse("mailto:"));
+            shareIntent.setSelector(emailFilterIntent);
+            shareIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{devEmail});
+            shareIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        }
+        else shareIntent.setType("text/plain");
         shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
         shareIntent.putExtra(Intent.EXTRA_SUBJECT, LOG_MESSAGE_PREFIX + RecoveryUtil.getAppName(this));
         shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        isSharing = true;
-        startActivity(Intent.createChooser(shareIntent, getResources().getString(R.string.recovery_share_log)));
+
+        /*if (!isEmail) */ startActivity(Intent.createChooser(shareIntent, getResources().getString(R.string.recovery_share_log)));
+        //else if (shareIntent.resolveActivity(getPackageManager()) != null) startActivity(shareIntent);
     }
 
     private void killProcess() {
