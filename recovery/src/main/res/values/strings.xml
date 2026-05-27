@@ -16,5 +16,6 @@
     <string name="recovery_class_name">ClassName: %s</string>
     <string name="recovery_method_name">MethodName: %s</string>
     <string name="recovery_line_number">LineNumber: %d</string>
+    <string name="recovery_time">Time: %s</string>
     <string name="recovery_crash_tips_msg">%s - An error has occurred.</string>
 </resources>

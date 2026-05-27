@@ -153,6 +153,7 @@ public final class RecoveryStore {
         String className;
         String methodName;
         int lineNumber;
+        long time;
 
         @Override
         public int describeContents() {
@@ -165,6 +166,7 @@ public final class RecoveryStore {
             dest.writeString(this.className);
             dest.writeString(this.methodName);
             dest.writeInt(this.lineNumber);
+            dest.writeLong(this.time);
         }
 
         ExceptionData() {
@@ -194,11 +196,17 @@ public final class RecoveryStore {
             return this;
         }
 
+        public ExceptionData time(long time) {
+            this.time = time;
+            return this;
+        }
+
         protected ExceptionData(Parcel in) {
             this.type = in.readString();
             this.className = in.readString();
             this.methodName = in.readString();
             this.lineNumber = in.readInt();
+            this.time = in.readLong();
         }
 
         public static final Creator<ExceptionData> CREATOR = new Creator<ExceptionData>() {
@@ -220,6 +228,7 @@ public final class RecoveryStore {
                     ", type='" + type + '\'' +
                     ", methodName='" + methodName + '\'' +
                     ", lineNumber=" + lineNumber +
+                    ", time=" + time +
                     '}';
         }
     }

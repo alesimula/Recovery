@@ -78,6 +78,8 @@ public final class RecoveryActivity extends Activity {
 
     private TextView mLineNumberTv;
 
+    private TextView mTimeTv;
+
     private TextView mStackTraceTv;
 
     private TextView mCauseTv;
@@ -150,6 +152,7 @@ public final class RecoveryActivity extends Activity {
         mClassNameTv = (TextView) findViewById(R.id.tv_class_name);
         mMethodNameTv = (TextView) findViewById(R.id.tv_method_name);
         mLineNumberTv = (TextView) findViewById(R.id.tv_line_number);
+        mTimeTv = (TextView) findViewById(R.id.tv_time);
         mStackTraceTv = (TextView) findViewById(R.id.tv_stack_trace);
         mCauseTv = (TextView) findViewById(R.id.tv_cause);
         mCrashTipsTv = (TextView) findViewById(R.id.tv_crash_tips);
@@ -264,7 +267,12 @@ public final class RecoveryActivity extends Activity {
             mMethodNameTv.setText(String.format(getResources().getString(R.string.recovery_method_name), mExceptionData.methodName));
 
             mLineNumberTv.setText(String.format(getResources().getString(R.string.recovery_line_number), mExceptionData.lineNumber));
+            
+            mTimeTv.setText(String.format(getResources().getString(R.string.recovery_time), RecoveryUtil.getDateFormat().format(new Date(mExceptionData.time))));
+        } else {
+            mTimeTv.setText(String.format(getResources().getString(R.string.recovery_time), RecoveryUtil.getDateFormat().format(new Date(System.currentTimeMillis()))));
         }
+        
         mCauseTv.setText(String.valueOf(mCause));
         mStackTraceTv.setText(String.valueOf(mStackTrace));
     }
@@ -350,8 +358,22 @@ public final class RecoveryActivity extends Activity {
         return getIntent().getParcelableArrayListExtra(RecoveryStore.RECOVERY_INTENTS);
     }
 
+    private String getDeviceInfo() {
+        String appVersion = "unknown";
+        try {
+            android.content.pm.PackageInfo pi = getPackageManager().getPackageInfo(getPackageName(), 0);
+            appVersion = pi.versionName + " (" + pi.versionCode + ")";
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "Device: " + android.os.Build.MANUFACTURER + " " + android.os.Build.MODEL + "\n" +
+               "Android SDK: " + android.os.Build.VERSION.SDK_INT + " (" + android.os.Build.VERSION.RELEASE + ")\n" +
+               "App Version: " + appVersion + "\n\n";
+    }
+
     private boolean saveCrashData() {
-        String date = RecoveryUtil.getDateFormat().format(new Date(System.currentTimeMillis()));
+        long time = mExceptionData != null ? mExceptionData.time : System.currentTimeMillis();
+        String date = RecoveryUtil.getDateFormat().format(new Date(time));
         File dir = new File(getExternalFilesDir(null) + File.separator + DEFAULT_CRASH_FILE_DIR_NAME);
         if (!dir.exists())
             dir.mkdirs();
@@ -359,7 +381,8 @@ public final class RecoveryActivity extends Activity {
         FileWriter writer = null;
         try {
             writer = new FileWriter(file);
-            writer.write("\nException:\n" + (mExceptionData == null ? null : mExceptionData.toString()) + "\n\n");
+            writer.write(getDeviceInfo());
+            writer.write("Exception:\n" + (mExceptionData == null ? null : mExceptionData.toString()) + "\n\n");
             writer.write("Cause:\n" + mCause + "\n\n");
             writer.write("StackTrace:\n" + mStackTrace + "\n\n");
             writer.flush();
@@ -381,12 +404,14 @@ public final class RecoveryActivity extends Activity {
         File dir = new File(getCacheDir(), DEFAULT_CRASH_FILE_DIR_NAME);
         if (!dir.exists())
             dir.mkdirs();
-        String date = RecoveryUtil.getDateFormat().format(new Date(System.currentTimeMillis()));
+        long time = mExceptionData != null ? mExceptionData.time : System.currentTimeMillis();
+        String date = RecoveryUtil.getDateFormat().format(new Date(time));
         String fileName = date + ".log";
         File file = new File(dir, fileName);
         FileWriter writer = null;
         try {
             writer = new FileWriter(file);
+            writer.write(getDeviceInfo());
             writer.write("Exception:\n" + (mExceptionData == null ? null : mExceptionData.toString()) + "\n\n");
             writer.write("Cause:\n" + mCause + "\n\n");
             writer.write("StackTrace:\n" + mStackTrace + "\n\n");

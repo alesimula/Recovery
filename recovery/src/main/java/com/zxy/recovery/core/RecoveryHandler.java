@@ -84,7 +84,8 @@ final class RecoveryHandler implements Thread.UncaughtExceptionHandler {
                 .type(exceptionType)
                 .className(throwClassName)
                 .methodName(throwMethodName)
-                .lineNumber(throwLineNumber);
+                .lineNumber(throwLineNumber)
+                .time(System.currentTimeMillis());
 
         mStackTrace = stackTrace;
         mCause = cause;

@@ -96,6 +96,20 @@
                     android:textSize="@dimen/recovery_default_text_size"
                     android:typeface="serif"
                     tools:text="LineNumber: "/>
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="32dp"
+                    android:layout_marginRight="@dimen/recovery_default_margin"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:paddingLeft="@dimen/recovery_default_margin"
+                    android:textColor="@color/recovery_textColor_sub"
+                    android:textSize="@dimen/recovery_default_text_size"
+                    android:typeface="serif"
+                    tools:text="Time: "/>
             </LinearLayout>
 
             <TextView
