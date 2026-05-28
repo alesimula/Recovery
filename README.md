@@ -39,21 +39,21 @@ allprojects {
 If you want to use the recovery framework in debug and release variants, you can use the following:
 
 ```gradle
-    implementation 'com.github.alesimula.Recovery:recovery:1.0.6'
+    implementation 'com.github.alesimula.Recovery:recovery:1.0.7'
 ```
 
 If you want to use the recovery framework only in debug variant, you can use the following:
 
 ```gradle
-    debugImplementation 'com.github.alesimula.Recovery:recovery:1.0.6'
-    releaseImplementation 'com.github.alesimula.Recovery:recovery-no-op:1.0.6'
+    debugImplementation 'com.github.alesimula.Recovery:recovery:1.0.7'
+    releaseImplementation 'com.github.alesimula.Recovery:recovery-no-op:1.0.7'
 ```
 
 or, IF AND ONLY you wrap the code that follows inside `if (BuildConfig.DEBUG) { [...] }` (UNSAFE: relies on R8 optimizer to strip the code on release)
 
 ```gradle
-    debugImplementation 'com.github.alesimula.Recovery:recovery:1.0.6'
-    releaseCompileOnly 'com.github.alesimula.Recovery:recovery-no-op:1.0.6'
+    debugImplementation 'com.github.alesimula.Recovery:recovery:1.0.7'
+    releaseCompileOnly 'com.github.alesimula.Recovery:recovery-no-op:1.0.7'
 ```
 
 ## **Initialization**
@@ -165,6 +165,7 @@ You can customize UI by setting these properties in your styles file:
 * `VERSION-1.0.4`——**Change default language to English**
 * `VERSION-1.0.5`——**Added send e-mail option**
 * `VERSION-1.0.6`——**Added correct log timestamp + minimal device info and app version**
+* `VERSION-1.0.7`——**Reduced resources size**
 
 # **LICENSE**
 
